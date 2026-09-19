@@ -1,609 +1,890 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noah's Baptism Invitation</title>
-<style>
-  :root{
-    --blue:#2c6da4;
-    --dark:#163e6b;
-    --sky:#dff4ff;
-    --cream:#fff4d9;
-    --white:#fff;
-  }
-  *{box-sizing:border-box}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noah's Baptism Invitation</title>
+    <style>
+      :root {
+        --blue: #2c6da4;
+        --dark: #163e6b;
+        --sky: #dff4ff;
+        --cream: #fff4d9;
+        --white: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
 
+      .decorations {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .cloud {
+        position: absolute;
+        width: 120px;
+        height: 42px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.72);
+        filter: drop-shadow(0 7px 10px rgba(72, 139, 184, 0.08));
+        animation: cloudDrift linear infinite;
+      }
+      .cloud:before,
+      .cloud:after {
+        content: "";
+        position: absolute;
+        background: inherit;
+        border-radius: 50%;
+      }
+      .cloud:before {
+        width: 58px;
+        height: 58px;
+        left: 20px;
+        top: -28px;
+      }
+      .cloud:after {
+        width: 72px;
+        height: 72px;
+        right: 16px;
+        top: -38px;
+      }
+      .cloud.c1 {
+        top: 10%;
+        left: -150px;
+        animation-duration: 34s;
+      }
+      .cloud.c2 {
+        top: 43%;
+        left: -180px;
+        transform: scale(0.72);
+        opacity: 0.8;
+        animation-duration: 42s;
+        animation-delay: -15s;
+      }
+      .cloud.c3 {
+        top: 72%;
+        left: -190px;
+        transform: scale(0.55);
+        opacity: 0.7;
+        animation-duration: 38s;
+        animation-delay: -26s;
+      }
 
-  .decorations{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:-1;
-  }
-  .cloud{
-    position:absolute;
-    width:120px;
-    height:42px;
-    border-radius:50px;
-    background:rgba(255,255,255,.72);
-    filter:drop-shadow(0 7px 10px rgba(72,139,184,.08));
-    animation:cloudDrift linear infinite;
-  }
-  .cloud:before,.cloud:after{
-    content:"";
-    position:absolute;
-    background:inherit;
-    border-radius:50%;
-  }
-  .cloud:before{
-    width:58px;height:58px;
-    left:20px;top:-28px;
-  }
-  .cloud:after{
-    width:72px;height:72px;
-    right:16px;top:-38px;
-  }
-  .cloud.c1{top:10%;left:-150px;animation-duration:34s}
-  .cloud.c2{top:43%;left:-180px;transform:scale(.72);opacity:.8;animation-duration:42s;animation-delay:-15s}
-  .cloud.c3{top:72%;left:-190px;transform:scale(.55);opacity:.7;animation-duration:38s;animation-delay:-26s}
+      .balloon {
+        position: absolute;
+        width: 54px;
+        height: 72px;
+        border-radius: 50% 50% 47% 47%;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.35),
+            rgba(255, 255, 255, 0) 38%
+          ),
+          #79bced;
+        box-shadow: inset -9px -8px 0 rgba(35, 102, 160, 0.1);
+        animation: balloonFloat 5s ease-in-out infinite;
+      }
+      .balloon:before {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 23px;
+        width: 9px;
+        height: 10px;
+        background: #f1b18d;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+      }
+      .balloon:after {
+        content: "";
+        position: absolute;
+        top: 70px;
+        left: 26px;
+        width: 1px;
+        height: 130px;
+        background: rgba(27, 67, 104, 0.55);
+      }
+      .balloon.b1 {
+        left: 5%;
+        top: 18%;
+        animation-delay: -1s;
+        transform: scale(0.8);
+      }
+      .balloon.b2 {
+        right: 7%;
+        top: 27%;
+        animation-delay: -3s;
+        transform: scale(0.68);
+      }
+      .balloon.b3 {
+        left: 10%;
+        bottom: 15%;
+        animation-delay: -2s;
+        transform: scale(0.58);
+      }
+      .balloon.b4 {
+        right: 12%;
+        bottom: 10%;
+        animation-delay: -4s;
+        transform: scale(0.78);
+      }
 
-  .balloon{
-    position:absolute;
-    width:54px;
-    height:72px;
-    border-radius:50% 50% 47% 47%;
-    background:linear-gradient(90deg,rgba(255,255,255,.35),rgba(255,255,255,0) 38%),#79bced;
-    box-shadow:inset -9px -8px 0 rgba(35,102,160,.10);
-    animation:balloonFloat 5s ease-in-out infinite;
-  }
-  .balloon:before{
-    content:"";
-    position:absolute;
-    bottom:-8px;
-    left:23px;
-    width:9px;height:10px;
-    background:#f1b18d;
-    clip-path:polygon(0 0,100% 0,50% 100%);
-  }
-  .balloon:after{
-    content:"";
-    position:absolute;
-    top:70px;
-    left:26px;
-    width:1px;
-    height:130px;
-    background:rgba(27,67,104,.55);
-  }
-  .balloon.b1{left:5%;top:18%;animation-delay:-1s;transform:scale(.8)}
-  .balloon.b2{right:7%;top:27%;animation-delay:-3s;transform:scale(.68)}
-  .balloon.b3{left:10%;bottom:15%;animation-delay:-2s;transform:scale(.58)}
-  .balloon.b4{right:12%;bottom:10%;animation-delay:-4s;transform:scale(.78)}
+      @keyframes balloonFloat {
+        0%,
+        100% {
+          margin-top: 0;
+          rotate: -2deg;
+        }
+        50% {
+          margin-top: -18px;
+          rotate: 2deg;
+        }
+      }
+      @keyframes cloudDrift {
+        from {
+          translate: 0 0;
+        }
+        to {
+          translate: calc(100vw + 360px) 0;
+        }
+      }
+      @media (max-width: 650px) {
+        .balloon {
+          width: 42px;
+          height: 58px;
+        }
+        .balloon:after {
+          top: 56px;
+          height: 90px;
+        }
+        .cloud {
+          transform: scale(0.7);
+        }
+      }
+      .water-bg {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -3;
+        pointer-events: none;
+      }
+      .water-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background: rgba(232, 248, 255, 0.58);
+        backdrop-filter: blur(1px);
+      }
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--dark);
+        background: transparent;
+      }
+      .page {
+        max-width: 900px;
+        margin: auto;
+        overflow: hidden;
+      }
+      .hero {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 55px 22px;
+        background:
+          radial-gradient(
+            circle at 12% 10%,
+            rgba(117, 184, 235, 0.45) 0 55px,
+            transparent 56px
+          ),
+          radial-gradient(
+            circle at 90% 18%,
+            rgba(117, 184, 235, 0.3) 0 70px,
+            transparent 71px
+          ),
+          linear-gradient(#e8f8ff, #dff3ff);
+      }
+      .hero:before,
+      .hero:after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.45);
+        filter: blur(2px);
+      }
+      .hero:before {
+        width: 240px;
+        height: 240px;
+        left: -110px;
+        top: 35%;
+      }
+      .hero:after {
+        width: 280px;
+        height: 280px;
+        right: -130px;
+        bottom: 5%;
+      }
+      .content {
+        position: relative;
+        z-index: 2;
+        max-width: 700px;
+      }
+      .eyebrow {
+        font-size: clamp(28px, 6vw, 52px);
+        font-weight: 700;
+        color: var(--blue);
+        margin-bottom: 20px;
+      }
+      .photo {
+        width: min(78vw, 430px);
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 10px solid rgba(255, 255, 255, 0.82);
+        box-shadow: 0 18px 50px rgba(30, 86, 130, 0.18);
+      }
+      h1 {
+        font-size: clamp(55px, 11vw, 105px);
+        line-height: 0.85;
+        margin: 20px 0 10px;
+        color: #1765a3;
+        font-style: italic;
+      }
+      .subtitle {
+        font-size: clamp(22px, 4vw, 34px);
+        margin: 8px 0 20px;
+      }
+      .invite {
+        font-size: clamp(18px, 3vw, 25px);
+        line-height: 1.55;
+        max-width: 650px;
+        margin: auto;
+      }
+      .section {
+        padding: 70px 22px;
+        text-align: center;
+        position: relative;
+      }
+      .section h2 {
+        font-size: clamp(36px, 7vw, 60px);
+        margin: 0 0 12px;
+        color: var(--blue);
+      }
+      .details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        max-width: 760px;
+        margin: 30px auto;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid rgba(44, 109, 164, 0.12);
+        border-radius: 24px;
+        padding: 24px 15px;
+        box-shadow: 0 10px 28px rgba(42, 101, 145, 0.1);
+      }
+      .icon {
+        font-size: 32px;
+      }
+      .card strong {
+        display: block;
+        font-size: 20px;
+        margin-top: 8px;
+      }
+      .card span {
+        display: block;
+        margin-top: 6px;
+        line-height: 1.45;
+      }
+      .venue-photo {
+        width: 100%;
+        max-width: 760px;
+        border-radius: 30px;
+        display: block;
+        margin: 30px auto;
+        box-shadow: 0 18px 45px rgba(24, 74, 115, 0.16);
+      }
+      .venue {
+        font-size: clamp(18px, 3vw, 26px);
+        line-height: 1.55;
+      }
+      .rsvp-wrap {
+        max-width: 680px;
+        margin: 20px auto 0;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 30px;
+        border-radius: 30px;
+        box-shadow: 0 18px 50px rgba(32, 92, 135, 0.14);
+        text-align: left;
+      }
+      label {
+        display: block;
+        font-weight: 700;
+        margin: 16px 0 7px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid #b9d8ec;
+        border-radius: 13px;
+        padding: 13px 14px;
+        font: inherit;
+        color: var(--dark);
+        background: #fbfeff;
+      }
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      button {
+        width: 100%;
+        margin-top: 20px;
+        border: 0;
+        border-radius: 15px;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        background: #2c6da4;
+        color: white;
+      }
+      button:hover {
+        filter: brightness(1.06);
+      }
+      button:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+      .success {
+        display: none;
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 16px;
+        background: #e8f8ec;
+        color: #21633a;
+        line-height: 1.5;
+      }
+      .error-box {
+        display: none;
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 16px;
+        background: #fdecec;
+        color: #7a2323;
+        line-height: 1.5;
+      }
 
-  @keyframes balloonFloat{
-    0%,100%{margin-top:0;rotate:-2deg}
-    50%{margin-top:-18px;rotate:2deg}
-  }
-  @keyframes cloudDrift{
-    from{translate:0 0}
-    to{translate:calc(100vw + 360px) 0}
-  }
-  @media(max-width:650px){
-    .balloon{width:42px;height:58px}
-    .balloon:after{top:56px;height:90px}
-    .cloud{transform:scale(.7)}
-  }
-  .water-bg{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-3;
-    pointer-events:none;
-  }
-  .water-overlay{
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    pointer-events:none;
-    background:rgba(232,248,255,.58);
-    backdrop-filter:blur(1px);
-  }
-  body{
-    margin:0;
-    font-family: Georgia, "Times New Roman", serif;
-    color:var(--dark);
-    background:transparent;
-  }
-  .page{
-    max-width:900px;
-    margin:auto;
-    overflow:hidden;
-  }
-  .hero{
-    min-height:100vh;
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:55px 22px;
-    background:
-      radial-gradient(circle at 12% 10%, rgba(117,184,235,.45) 0 55px, transparent 56px),
-      radial-gradient(circle at 90% 18%, rgba(117,184,235,.30) 0 70px, transparent 71px),
-      linear-gradient(#e8f8ff,#dff3ff);
-  }
-  .hero:before,.hero:after{
-    content:"";
-    position:absolute;
-    border-radius:50%;
-    background:rgba(255,255,255,.45);
-    filter:blur(2px);
-  }
-  .hero:before{width:240px;height:240px;left:-110px;top:35%}
-  .hero:after{width:280px;height:280px;right:-130px;bottom:5%}
-  .content{position:relative;z-index:2;max-width:700px}
-  .eyebrow{
-    font-size:clamp(28px,6vw,52px);
-    font-weight:700;
-    color:var(--blue);
-    margin-bottom:20px;
-  }
-  .photo{
-    width:min(78vw,430px);
-    aspect-ratio:1/1;
-    object-fit:cover;
-    border-radius:50%;
-    border:10px solid rgba(255,255,255,.82);
-    box-shadow:0 18px 50px rgba(30,86,130,.18);
-  }
-  h1{
-    font-size:clamp(55px,11vw,105px);
-    line-height:.85;
-    margin:20px 0 10px;
-    color:#1765a3;
-    font-style:italic;
-  }
-  .subtitle{
-    font-size:clamp(22px,4vw,34px);
-    margin:8px 0 20px;
-  }
-  .invite{
-    font-size:clamp(18px,3vw,25px);
-    line-height:1.55;
-    max-width:650px;
-    margin:auto;
-  }
-  .section{
-    padding:70px 22px;
-    text-align:center;
-    position:relative;
-  }
-  .section h2{
-    font-size:clamp(36px,7vw,60px);
-    margin:0 0 12px;
-    color:var(--blue);
-  }
-  .details{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-    max-width:760px;
-    margin:30px auto;
-  }
-  .card{
-    background:rgba(255,255,255,.76);
-    border:1px solid rgba(44,109,164,.12);
-    border-radius:24px;
-    padding:24px 15px;
-    box-shadow:0 10px 28px rgba(42,101,145,.10);
-  }
-  .icon{font-size:32px}
-  .card strong{display:block;font-size:20px;margin-top:8px}
-  .card span{display:block;margin-top:6px;line-height:1.45}
-  .venue-photo{
-    width:100%;
-    max-width:760px;
-    border-radius:30px;
-    display:block;
-    margin:30px auto;
-    box-shadow:0 18px 45px rgba(24,74,115,.16);
-  }
-  .venue{
-    font-size:clamp(18px,3vw,26px);
-    line-height:1.55;
-  }
-  .rsvp-wrap{
-    max-width:680px;
-    margin:20px auto 0;
-    background:rgba(255,255,255,.88);
-    padding:30px;
-    border-radius:30px;
-    box-shadow:0 18px 50px rgba(32,92,135,.14);
-    text-align:left;
-  }
-  label{display:block;font-weight:700;margin:16px 0 7px}
-  input,select,textarea{
-    width:100%;
-    border:1px solid #b9d8ec;
-    border-radius:13px;
-    padding:13px 14px;
-    font:inherit;
-    color:var(--dark);
-    background:#fbfeff;
-  }
-  textarea{min-height:100px;resize:vertical}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-  button{
-    width:100%;
-    margin-top:20px;
-    border:0;
-    border-radius:15px;
-    padding:15px;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    background:#2c6da4;
-    color:white;
-  }
-  button:hover{filter:brightness(1.06)}
-  .success{
-    display:none;
-    margin-top:18px;
-    padding:18px;
-    border-radius:16px;
-    background:#e8f8ec;
-    color:#21633a;
-    line-height:1.5;
-  }
+      .countdown {
+        max-width: 760px;
+        margin: 35px auto 0;
+        padding: 25px 18px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(44, 109, 164, 0.14);
+        border-radius: 28px;
+        box-shadow: 0 15px 40px rgba(42, 101, 145, 0.11);
+      }
+      .countdown-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c6da4;
+        margin-bottom: 18px;
+      }
+      .timer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .time-box {
+        background: rgba(223, 244, 255, 0.9);
+        border-radius: 18px;
+        padding: 14px 8px;
+      }
+      .time-number {
+        display: block;
+        font-size: clamp(28px, 6vw, 46px);
+        line-height: 1;
+        font-weight: 700;
+        color: #163e6b;
+      }
+      .time-label {
+        display: block;
+        margin-top: 7px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #54718a;
+      }
+      .countdown-done {
+        font-size: 25px;
+        font-weight: 700;
+        color: #2c6da4;
+      }
+      @media (max-width: 500px) {
+        .timer {
+          gap: 7px;
+        }
+        .time-box {
+          padding: 12px 5px;
+        }
+        .time-label {
+          font-size: 10px;
+        }
+      }
+      .qr-card {
+        max-width: 420px;
+        margin: 35px auto 0;
+        padding: 28px 24px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(44, 109, 164, 0.14);
+        border-radius: 28px;
+        box-shadow: 0 15px 40px rgba(42, 101, 145, 0.12);
+      }
+      .qr-card img {
+        width: 220px;
+        height: 220px;
+        max-width: 70vw;
+        border-radius: 12px;
+        display: block;
+        margin: 18px auto;
+      }
+      .qr-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #2c6da4;
+      }
+      .qr-note {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #54718a;
+      }
+      .footer {
+        padding: 45px 20px 65px;
+        text-align: center;
+        font-size: 22px;
+        color: var(--blue);
+      }
+      .mini {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #54718a;
+      }
+      @media (max-width: 650px) {
+        .details {
+          grid-template-columns: 1fr;
+        }
+        .row {
+          grid-template-columns: 1fr;
+        }
+        .rsvp-wrap {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <video
+      class="water-bg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src="water_background.mp4" type="video/mp4" />
+    </video>
+    <div class="water-overlay" aria-hidden="true"></div>
 
+    <iframe
+      name="hidden_google_form_frame"
+      style="display: none"
+      title="hidden form target"
+    ></iframe>
 
-  .countdown{
-    max-width:760px;
-    margin:35px auto 0;
-    padding:25px 18px;
-    background:rgba(255,255,255,.78);
-    border:1px solid rgba(44,109,164,.14);
-    border-radius:28px;
-    box-shadow:0 15px 40px rgba(42,101,145,.11);
-  }
-  .countdown-title{
-    font-size:24px;
-    font-weight:700;
-    color:#2c6da4;
-    margin-bottom:18px;
-  }
-  .timer{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-  }
-  .time-box{
-    background:rgba(223,244,255,.9);
-    border-radius:18px;
-    padding:14px 8px;
-  }
-  .time-number{
-    display:block;
-    font-size:clamp(28px,6vw,46px);
-    line-height:1;
-    font-weight:700;
-    color:#163e6b;
-  }
-  .time-label{
-    display:block;
-    margin-top:7px;
-    font-size:13px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    color:#54718a;
-  }
-  .countdown-done{
-    font-size:25px;
-    font-weight:700;
-    color:#2c6da4;
-  }
-  @media(max-width:500px){
-    .timer{gap:7px}
-    .time-box{padding:12px 5px}
-    .time-label{font-size:10px}
-  }
-  .qr-card{
-    max-width:420px;
-    margin:35px auto 0;
-    padding:28px 24px;
-    text-align:center;
-    background:rgba(255,255,255,.88);
-    border:1px solid rgba(44,109,164,.14);
-    border-radius:28px;
-    box-shadow:0 15px 40px rgba(42,101,145,.12);
-  }
-  .qr-card img{
-    width:220px;
-    height:220px;
-    max-width:70vw;
-    border-radius:12px;
-    display:block;
-    margin:18px auto;
-  }
-  .qr-title{
-    font-size:26px;
-    font-weight:700;
-    color:#2c6da4;
-  }
-  .qr-note{
-    font-size:16px;
-    line-height:1.5;
-    color:#54718a;
-  }
-  .footer{
-    padding:45px 20px 65px;
-    text-align:center;
-    font-size:22px;
-    color:var(--blue);
-  }
-  .mini{
-    margin-top:10px;
-    font-size:14px;
-    color:#54718a;
-  }
-  @media(max-width:650px){
-    .details{grid-template-columns:1fr}
-    .row{grid-template-columns:1fr}
-    .rsvp-wrap{padding:22px}
-  }
-</style>
-</head>
-<body>
+    <div class="decorations" aria-hidden="true">
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
 
-  <video class="water-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-    <source src="water_background.mp4" type="video/mp4">
-  </video>
-  <div class="water-overlay" aria-hidden="true"></div>
-
-
-  <div class="decorations" aria-hidden="true">
-    <div class="cloud c1"></div>
-    <div class="cloud c2"></div>
-    <div class="cloud c3"></div>
-
-    <div class="balloon b1"></div>
-    <div class="balloon b2"></div>
-    <div class="balloon b3"></div>
-    <div class="balloon b4"></div>
-  </div>
-
-<main class="page">
-
-  <section class="hero">
-    <div class="content">
-      <div class="eyebrow">Join us for the</div>
-
-      <!-- Keep noah1.png in the same folder as this HTML file -->
-      <img src="noah3.jpg" alt="Baby Noah" class="photo">
-
-      <div class="subtitle">Baptism of</div>
-      <h1>Jarvis Noah</h1>
-
-      <p class="invite">
-        You are warmly invited to celebrate the Christening of our baby boy.
-      </p>
+      <div class="balloon b1"></div>
+      <div class="balloon b2"></div>
+      <div class="balloon b3"></div>
+      <div class="balloon b4"></div>
     </div>
-  </section>
 
-  <section class="section">
-    <h2>Save the Date</h2>
+    <main class="page">
+      <section class="hero">
+        <div class="content">
+          <div class="eyebrow">Join us for the</div>
 
-    <div class="countdown" aria-label="Countdown to Noah's baptism">
-      <div class="countdown-title">Counting Down to Noah's Baptism 💙</div>
-      <div class="timer" id="timer">
-        <div class="time-box"><span class="time-number" id="days">0</span><span class="time-label">Days</span></div>
-        <div class="time-box"><span class="time-number" id="hours">0</span><span class="time-label">Hours</span></div>
-        <div class="time-box"><span class="time-number" id="minutes">0</span><span class="time-label">Minutes</span></div>
-        <div class="time-box"><span class="time-number" id="seconds">0</span><span class="time-label">Seconds</span></div>
-      </div>
-      <div class="countdown-done" id="countdownDone" style="display:none;">
-        Today is Noah's special day! 🎉💙
-      </div>
-    </div>
+          <!-- Keep noah1.png in the same folder as this HTML file -->
+          <img src="noah3.jpg" alt="Baby Noah" class="photo" />
 
-    <div class="details">
-      <div class="card">
-        <div class="icon">📅</div>
-        <strong>October 24, 2026</strong>
-        <span>Saturday</span>
-      </div>
-      <div class="card">
-        <div class="icon">⏰</div>
-        <strong>3:30 PM</strong>
-        <span>Please arrive a little early.</span>
-      </div>
-      <div class="card">
-        <div class="icon">🎈</div>
-        <strong>Baptism</strong>
-        <span>Jollibee Ortigas Ave. Extn – Valley Golf Rd</span>
-      </div>
-    </div>
+          <div class="subtitle">Baptism of</div>
+          <h1>Jarvis Noah</h1>
 
-    <!-- Keep noah2.png in the same folder -->
-    <img src="noah2.png" alt="Reception location" class="venue-photo">
+          <p class="invite">
+            You are warmly invited to celebrate the Christening of our baby boy.
+          </p>
+        </div>
+      </section>
 
-    <p class="venue">
-      <strong>The reception will also be held at</strong><br>
-      Jollibee Ortigas Ave. Extn – Valley Golf Rd
-    </p>
-  </section>
+      <section class="section">
+        <h2>Save the Date</h2>
 
-  <section class="section" id="rsvp">
-    <h2>Guest Confirmation</h2>
-    <p class="invite">
-      Kitakits! Please let us know if you can come.
-    </p>
-
-    <div class="rsvp-wrap">
-      <form id="rsvpForm">
-        <label for="name">Guest Name *</label>
-        <input id="name" name="name" type="text" placeholder="Enter your full name" required>
-
-        <div class="row">
-          <div>
-            <label for="attendance">Will you attend? *</label>
-            <select id="attendance" name="attendance" required>
-              <option value="">Select one</option>
-              <option value="Yes, I will attend">Yes, I will attend</option>
-              <option value="Sorry, I can't attend">Sorry, I can't attend</option>
-            </select>
+        <div class="countdown" aria-label="Countdown to Noah's baptism">
+          <div class="countdown-title">Counting Down to Noah's Baptism 💙</div>
+          <div class="timer" id="timer">
+            <div class="time-box">
+              <span class="time-number" id="days">0</span
+              ><span class="time-label">Days</span>
+            </div>
+            <div class="time-box">
+              <span class="time-number" id="hours">0</span
+              ><span class="time-label">Hours</span>
+            </div>
+            <div class="time-box">
+              <span class="time-number" id="minutes">0</span
+              ><span class="time-label">Minutes</span>
+            </div>
+            <div class="time-box">
+              <span class="time-number" id="seconds">0</span
+              ><span class="time-label">Seconds</span>
+            </div>
           </div>
-
-          <div>
-            <label for="guests">Number of guests</label>
-<select id="guests" name="guests">
-  <option value="Only Me">Only Me</option>
-  <option value="Plus 1">Plus 1</option>
-</select>
-
-<div id="plusOneGuest" style="display: none;">
-  <label for="name1">Plus 1 Guest Name *</label>
-  <input 
-    id="name1" 
-    name="name1" 
-    type="text" 
-    placeholder="Enter plus 1 guest's full name"
-  >
-</div>
-
-<script>
-  const guests = document.getElementById("guests");
-  const plusOneGuest = document.getElementById("plusOneGuest");
-  const name1 = document.getElementById("name1");
-
-  guests.addEventListener("change", function () {
-    if (this.value === "Plus 1") {
-      plusOneGuest.style.display = "block";
-      name1.required = true;
-    } else {
-      plusOneGuest.style.display = "none";
-      name1.required = false;
-      name1.value = "";
-    }
-  });
-</script>
+          <div class="countdown-done" id="countdownDone" style="display: none">
+            Today is Noah's special day! 🎉💙
           </div>
         </div>
 
-        <label for="message">Message (optional)</label>
-        <textarea id="message" name="message" placeholder="Leave a message for Jarvis Noah"></textarea>
+        <div class="details">
+          <div class="card">
+            <div class="icon">📅</div>
+            <strong>October 24, 2026</strong>
+            <span>Saturday</span>
+          </div>
+          <div class="card">
+            <div class="icon">⏰</div>
+            <strong>3:30 PM</strong>
+            <span>Please arrive a little early.</span>
+          </div>
+          <div class="card">
+            <div class="icon">🎈</div>
+            <strong>Baptism</strong>
+            <span>Jollibee Ortigas Ave. Extn – Valley Golf Rd</span>
+          </div>
+        </div>
 
-        <button type="submit">Confirm My Attendance</button>
+        <!-- Keep noah2.png in the same folder -->
+        <img src="noah2.png" alt="Reception location" class="venue-photo" />
 
-        <div class="success" id="successBox"></div>
-      </form>
-    </div>
+        <p class="venue">
+          <strong>The reception will also be held at</strong><br />
+          Jollibee Ortigas Ave. Extn – Valley Golf Rd
+        </p>
+      </section>
 
+      <section class="section" id="rsvp">
+        <h2>Guest Confirmation</h2>
+        <p class="invite">Kitakits! Please let us know if you can come.</p>
 
-    <div class="qr-card">
-      <div class="qr-title">Scan for Event Details</div>
-      <img src="noah_baptism_qr.png" alt="QR code containing Noah's baptism event details">
-      <div class="qr-note">
-        Scan this QR code to quickly view Noah's baptism date, time, and reception details.
+        <div class="rsvp-wrap">
+          <form id="rsvpForm">
+            <label for="name">Guest Name *</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+              required
+            />
+
+            <div class="row">
+              <div>
+                <label for="attendance">Will you attend? *</label>
+                <select id="attendance" name="attendance" required>
+                  <option value="">Select one</option>
+                  <option value="Yes, I will attend">Yes, I will attend</option>
+                  <option value="Sorry, I can't attend">
+                    Sorry, I can't attend
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label for="guests">Number of guests</label>
+                <select id="guests" name="guests">
+                  <option value="Only Me">Only Me</option>
+                  <option value="Plus 1">Plus 1</option>
+                </select>
+
+                <div id="plusOneGuest" style="display: none">
+                  <label for="name1">Plus 1 Guest Name *</label>
+                  <input
+                    id="name1"
+                    name="name1"
+                    type="text"
+                    placeholder="Enter plus 1 guest's full name"
+                  />
+                </div>
+
+                <script>
+                  const guests = document.getElementById("guests");
+                  const plusOneGuest = document.getElementById("plusOneGuest");
+                  const name1 = document.getElementById("name1");
+
+                  guests.addEventListener("change", function () {
+                    if (this.value === "Plus 1") {
+                      plusOneGuest.style.display = "block";
+                      name1.required = true;
+                    } else {
+                      plusOneGuest.style.display = "none";
+                      name1.required = false;
+                      name1.value = "";
+                    }
+                  });
+                </script>
+              </div>
+            </div>
+
+            <label for="message">Message (optional)</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Leave a message for Jarvis Noah"
+            ></textarea>
+
+            <button type="submit" id="submitBtn">Confirm My Attendance</button>
+
+            <div class="success" id="successBox"></div>
+            <div class="error-box" id="errorBox"></div>
+          </form>
+        </div>
+
+        <div class="qr-card">
+          <div class="qr-title">Scan for Event Details</div>
+          <img
+            src="noah_baptism_qr.png"
+            alt="QR code containing Noah's baptism event details"
+          />
+          <div class="qr-note">
+            Scan this QR code to quickly view Noah's baptism date, time, and
+            reception details.
+          </div>
+        </div>
+
+        <p class="mini">
+          Thank you for celebrating this special day with Noah!
+        </p>
+      </section>
+
+      <div class="footer">
+        THANK YOU<br />
+        <strong>NOAH'S BAPTISM</strong>
       </div>
-    </div>
+    </main>
 
-    <p class="mini">
-      Thank you for celebrating this special day with Noah!
-    </p>
-  </section>
+    <script>
+      /* =========================================================
+         GOOGLE FORM CONNECTION — replace the 5 values below.
+         See instructions further down for how to get them.
+         ========================================================= */
+      const GOOGLE_FORM_CONFIG = {
+        // Your Form's action URL, ending in /formResponse
+        // e.g. "https://docs.google.com/forms/d/e/1FAIpQLSxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/formResponse"
+        actionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfPpdrWUa4n68vJ5OJx3rpn73QL7sqLX7K2payHpvk_Cp89lQ/formResponse",
 
-  <div class="footer">
-    THANK YOU<br>
-    <strong>NOAH'S BAPTISM</strong>
-  </div>
+        // Entry IDs from your Form's pre-filled link, e.g. "entry.123456789"
+        entryName: "entry.1850944868",
+        entryAttendance: "entry.1406602180",
+        entryGuests: "entry.406664196",
+        entryName1: "entry.1212993299",
+        entryMessage: "entry.1440898346",
+      };
 
-</main>
+      function isConfigured() {
+        return (
+          GOOGLE_FORM_CONFIG.actionUrl &&
+          !GOOGLE_FORM_CONFIG.actionUrl.startsWith("PASTE_")
+        );
+      }
 
-<script>
-document.getElementById("rsvpForm").addEventListener("submit", function(e){
-  e.preventDefault();
+      // Submits via a real hidden <form> posting into a hidden <iframe>,
+      // instead of fetch(). This is the classic, most reliable way to send
+      // data to a Google Form cross-origin — it works even from local
+      // file:// pages, where fetch() can behave unpredictably.
+      function submitToGoogleForm(record) {
+        return new Promise((resolve) => {
+          const form = document.createElement("form");
+          form.action = GOOGLE_FORM_CONFIG.actionUrl;
+          form.method = "POST";
+          form.target = "hidden_google_form_frame";
+          form.style.display = "none";
 
-  const name = document.getElementById("name").value.trim();
-  const attendance = document.getElementById("attendance").value;
-  const guests = document.getElementById("guests").value;
-  const message = document.getElementById("message").value.trim();
+          const fields = {
+            [GOOGLE_FORM_CONFIG.entryName]: record.name,
+            [GOOGLE_FORM_CONFIG.entryAttendance]: record.attendance,
+            [GOOGLE_FORM_CONFIG.entryGuests]: record.guests,
+            [GOOGLE_FORM_CONFIG.entryName1]: record.name1 || "",
+            [GOOGLE_FORM_CONFIG.entryMessage]: record.message || "",
+          };
 
-  // This stores the RSVP in the visitor's browser.
-  // For a shared online guest list, connect this form to PHP/MySQL or Google Sheets.
-  const record = {
-    name,
-    attendance,
-    guests,
-    message,
-    submittedAt: new Date().toLocaleString()
-  };
+          for (const [key, value] of Object.entries(fields)) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = value;
+            form.appendChild(input);
+          }
 
-  const existing = JSON.parse(localStorage.getItem("noah_baptism_rsvp") || "[]");
-  existing.push(record);
-  localStorage.setItem("noah_baptism_rsvp", JSON.stringify(existing));
+          document.body.appendChild(form);
+          form.submit();
 
-  const success = document.getElementById("successBox");
-  success.style.display = "block";
-  success.innerHTML =
-    `<strong>Thank you, ${escapeHtml(name)}! 💙</strong><br>` +
-    `${escapeHtml(attendance)}${attendance.startsWith("Yes") ? " — Guests: " + escapeHtml(guests) : ""}<br>` +
-    `Your confirmation has been recorded on this device.`;
+          // We can't read the iframe's response (cross-origin), so we
+          // just give it a moment to complete, then clean up and resolve.
+          setTimeout(() => {
+            document.body.removeChild(form);
+            resolve();
+          }, 800);
+        });
+      }
+    </script>
 
-  this.reset();
-});
+    <script>
+      document
+        .getElementById("rsvpForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
 
-function escapeHtml(text){
-  return text.replace(/[&<>"']/g, function(m){
-    return ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    })[m];
-  });
-}
-</script>
+          const name = document.getElementById("name").value.trim();
+          const attendance = document.getElementById("attendance").value;
+          const guestsVal = document.getElementById("guests").value;
+          const name1 = document.getElementById("name1").value.trim();
+          const message = document.getElementById("message").value.trim();
 
+          const record = {
+            name,
+            attendance,
+            guests: guestsVal,
+            name1,
+            message,
+            submittedAt: new Date().toLocaleString(),
+          };
 
-<script>
-(function(){
-  // Event time: October 24, 2026 at 3:30 PM, Philippine time (UTC+8).
-  const eventTime = new Date("2026-10-24T15:30:00+08:00").getTime();
+          const submitBtn = document.getElementById("submitBtn");
+          const success = document.getElementById("successBox");
+          const errorBox = document.getElementById("errorBox");
+          success.style.display = "none";
+          errorBox.style.display = "none";
 
-  function updateCountdown(){
-    const now = Date.now();
-    let distance = eventTime - now;
+          // Always keep a local backup copy on this device too.
+          const existing = JSON.parse(
+            localStorage.getItem("noah_baptism_rsvp") || "[]",
+          );
+          existing.push(record);
+          localStorage.setItem("noah_baptism_rsvp", JSON.stringify(existing));
 
-    if(distance <= 0){
-      document.getElementById("timer").style.display = "none";
-      document.getElementById("countdownDone").style.display = "block";
-      return;
-    }
+          if (isConfigured()) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Sending...";
+            try {
+              await submitToGoogleForm(record);
+            } catch (err) {
+              console.error("Google Form submission failed:", err);
+              errorBox.style.display = "block";
+              errorBox.innerHTML =
+                "Sorry, something went wrong sending your RSVP online. " +
+                "Please try again, or message the family directly.";
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Confirm My Attendance";
+              return;
+            }
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Confirm My Attendance";
+          }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    distance %= (1000 * 60 * 60 * 24);
+          success.style.display = "block";
+          success.innerHTML =
+            `<strong>Thank you, ${escapeHtml(name)}! 💙</strong><br>` +
+            `${escapeHtml(attendance)}${attendance.startsWith("Yes") ? " — Guests: " + escapeHtml(guestsVal) : ""}<br>` +
+            (isConfigured()
+              ? "Your RSVP has been recorded."
+              : "Your confirmation has been recorded on this device.");
 
-    const hours = Math.floor(distance / (1000 * 60 * 60));
-    distance %= (1000 * 60 * 60);
+          this.reset();
+          document.getElementById("plusOneGuest").style.display = "none";
+        });
 
-    const minutes = Math.floor(distance / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      function escapeHtml(text) {
+        return text.replace(/[&<>"']/g, function (m) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;",
+          }[m];
+        });
+      }
+    </script>
 
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
-    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
-  }
+    <script>
+      (function () {
+        // Event time: October 24, 2026 at 3:30 PM, Philippine time (UTC+8).
+        const eventTime = new Date("2026-10-24T15:30:00+08:00").getTime();
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-})();
-</script>
+        function updateCountdown() {
+          const now = Date.now();
+          let distance = eventTime - now;
 
-</body>
+          if (distance <= 0) {
+            document.getElementById("timer").style.display = "none";
+            document.getElementById("countdownDone").style.display = "block";
+            return;
+          }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          distance %= 1000 * 60 * 60 * 24;
+
+          const hours = Math.floor(distance / (1000 * 60 * 60));
+          distance %= 1000 * 60 * 60;
+
+          const minutes = Math.floor(distance / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          document.getElementById("days").textContent = days;
+          document.getElementById("hours").textContent = String(hours).padStart(
+            2,
+            "0",
+          );
+          document.getElementById("minutes").textContent = String(
+            minutes,
+          ).padStart(2, "0");
+          document.getElementById("seconds").textContent = String(
+            seconds,
+          ).padStart(2, "0");
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+    </script>
+  </body>
 </html>
